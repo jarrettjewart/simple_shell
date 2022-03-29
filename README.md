@@ -1,1 +1,1 @@
-# simple_shell
+This project is setup to build a simple shell, we use our main function to create a loop to open the shell. It opens up with a prompt to take command lines. then it goes through our struct to register which function or command to use then gives us the utput of the command on success. if the command fails then it prints an error.
