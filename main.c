@@ -13,31 +13,37 @@
 
 
 
-int main(int argc, char **argv)
+int main(int argc, char **argv, char **env)
 {
-	char *cmd;
+	char *buf;
+	ssize_t charread;
+	general_t genhead = NULL;
 
-	do {
-		print_prompt1();
+	argc = argc;
+	argv = argv;
 
-		cmd = read_cmd();
+	genhead = initstruct(env);
+	initbuiltin(genhead);
 
-		if (!cmd)
+	if (isatty(STDIN_FILENO))
+	{
+		genhead->isinteractive = 1;
+		interactiveshell(genhead);
+	}
+	else
+	{
+		buf = malloc(1024 * sizeof(char));
+		if (buf == NULL)
+			exit(12);
+		addmemnibuffer(genhead, buf);
+		charsread = read(0, buf, 1024);
+		if (charsread == -1)
+			exit(EXIT_FAILURE);
+		else
 		{
-			exit(EXIT_SUCCESS);
+			genhead->isinteractive = 0;
+			noninteractiveshell(buf, genhead);
 		}
-
-		if (cmd[0] == '\0' || strcmp(cmd, "\n") == 0)
-		{
-			free(cmd);
-			break;
-		}
-
-		printf("%s\n", cmd);
-
-		free(cmd);
-
-	} while (1);
-
-	exit(EXIT_SUCCESS);
-}}
+	}
+	return (0);
+}

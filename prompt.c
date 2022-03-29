@@ -2,19 +2,14 @@
 #include "shell.h"
 
 /**
- * print_prompt1 - prints $
+ * print_prompt - prints prompt
+ * @prompt: prompt to print
  */
 
-void print_prompt1(void)
+void print_prompt (char *prompt)
 {
-	fprintf(stderr, "$ ");
-}
+	unsigned int length;
 
-/**
- * print_prompt2 - prints >
- */
-
-void print_prompt2(void)
-{
-	fprintf(stderr, "> ");
+	length = _strlen(prompt);
+	write(1, prompt, (size_t)length);
 }
