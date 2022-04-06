@@ -52,7 +52,7 @@ int _strlen(char *s);
 void _print_env(void);
 char **delim(char *cm, char *del);
 char **tokenize(char *str, char *delim, general_t *genHead)
-
+int interactiveshell(general_t *genHead);
 
 
 
